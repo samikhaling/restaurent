@@ -4,6 +4,14 @@ import { NextResponse } from "next/server";
 export const PUT = async ({ params }: { params: { intentId: string } }) => {
   const { intentId } = params;
 
+  // Validate intentId
+  if (typeof intentId !== 'string') {
+    return new NextResponse(
+      JSON.stringify({ message: "Invalid intentId" }),
+      { status: 400 }
+    );
+  }
+
   try {
     await prisma.order.update({
       where: {
